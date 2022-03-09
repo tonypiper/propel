@@ -109,6 +109,13 @@ class Propel
     private static $debugOutput = [];
 
     /**
+     * The elapsed time counter.
+     *
+     * @var int
+     */
+    private static $startTime = 0;
+
+    /**
      * @var        string The db name that is specified as the default in the property file
      */
     private static $defaultDBName;
@@ -401,9 +408,12 @@ class Propel
      */
     public static function addDebugOutput($statement = '', $bindings = [])
     {
+        self::startTime();
+
         self::$debugOutput[] = [
             'statement' => $statement,
-            'bindings' => $bindings
+            'bindings' => $bindings,
+            'start' => self::$startTime
         ];
     }
 
@@ -415,6 +425,20 @@ class Propel
     public static function addDebugBindingToLast($parameter = '', $value = '')
     {
         self::$debugOutput[count(self::$debugOutput) - 1]['bindings'][$parameter] = $value;
+    }
+
+    /**
+     * Begin tracking the time.
+     */
+    public static function startTime()
+    {
+        self::$startTime = microtime(true);
+
+        if(!self::$debugOutput){
+            return;
+        }
+
+        self::$debugOutput[count(self::$debugOutput) - 1]['elapsed'] = self::$startTime - self::$debugOutput[count(self::$debugOutput) - 1]['start'];
     }
 
     /**
