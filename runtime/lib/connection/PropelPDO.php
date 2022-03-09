@@ -410,6 +410,8 @@ class PropelPDO extends PDO
             $this->log($sql, null, __METHOD__, $debug);
         }
 
+        Propel::addDebugOutput($sql);
+
         return $return;
     }
 

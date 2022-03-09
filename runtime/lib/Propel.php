@@ -102,6 +102,13 @@ class Propel
     const CONNECTION_WRITE = 'write';
 
     /**
+     * A collection of executed statements for debugging purposes.
+     *
+     * @var array
+     */
+    private static $debugOutput = [];
+
+    /**
      * @var        string The db name that is specified as the default in the property file
      */
     private static $defaultDBName;
@@ -161,22 +168,22 @@ class Propel
      */
     protected static $autoloadMap = array(
 
-        'DBAdapter'           => 'adapter/DBAdapter.php',
-        'DBMSSQL'             => 'adapter/DBMSSQL.php',
-        'MssqlPropelPDO'      => 'adapter/MSSQL/MssqlPropelPDO.php',
-        'MssqlDebugPDO'       => 'adapter/MSSQL/MssqlDebugPDO.php',
-        'MssqlDateTime'       => 'adapter/MSSQL/MssqlDateTime.class.php',
-        'DBMySQL'             => 'adapter/DBMySQL.php',
-        'DBMySQLi'            => 'adapter/DBMySQLi.php',
-        'DBNone'              => 'adapter/DBNone.php',
-        'DBOracle'            => 'adapter/DBOracle.php',
-        'DBPostgres'          => 'adapter/DBPostgres.php',
-        'DBSQLite'            => 'adapter/DBSQLite.php',
-        'DBSybase'            => 'adapter/DBSybase.php',
-        'DBSQLSRV'            => 'adapter/DBSQLSRV.php',
+        'DBAdapter' => 'adapter/DBAdapter.php',
+        'DBMSSQL' => 'adapter/DBMSSQL.php',
+        'MssqlPropelPDO' => 'adapter/MSSQL/MssqlPropelPDO.php',
+        'MssqlDebugPDO' => 'adapter/MSSQL/MssqlDebugPDO.php',
+        'MssqlDateTime' => 'adapter/MSSQL/MssqlDateTime.class.php',
+        'DBMySQL' => 'adapter/DBMySQL.php',
+        'DBMySQLi' => 'adapter/DBMySQLi.php',
+        'DBNone' => 'adapter/DBNone.php',
+        'DBOracle' => 'adapter/DBOracle.php',
+        'DBPostgres' => 'adapter/DBPostgres.php',
+        'DBSQLite' => 'adapter/DBSQLite.php',
+        'DBSybase' => 'adapter/DBSybase.php',
+        'DBSQLSRV' => 'adapter/DBSQLSRV.php',
 
         'PropelArrayCollection' => 'collection/PropelArrayCollection.php',
-        'PropelCollection'    => 'collection/PropelCollection.php',
+        'PropelCollection' => 'collection/PropelCollection.php',
         'PropelObjectCollection' => 'collection/PropelObjectCollection.php',
         'PropelOnDemandCollection' => 'collection/PropelOnDemandCollection.php',
         'PropelOnDemandIterator' => 'collection/PropelOnDemandIterator.php',
@@ -184,73 +191,73 @@ class Propel
         'PropelConfiguration' => 'config/PropelConfiguration.php',
         'PropelConfigurationIterator' => 'config/PropelConfigurationIterator.php',
 
-        'PropelPDO'           => 'connection/PropelPDO.php',
-        'DebugPDO'            => 'connection/DebugPDO.php',
-        'DebugPDOStatement'   => 'connection/DebugPDOStatement.php',
+        'PropelPDO' => 'connection/PropelPDO.php',
+        'DebugPDO' => 'connection/DebugPDO.php',
+        'DebugPDOStatement' => 'connection/DebugPDOStatement.php',
 
-        'PropelException'     => 'exception/PropelException.php',
+        'PropelException' => 'exception/PropelException.php',
 
-        'ModelWith'           => 'formatter/ModelWith.php',
+        'ModelWith' => 'formatter/ModelWith.php',
         'PropelArrayFormatter' => 'formatter/PropelArrayFormatter.php',
-        'PropelFormatter'     => 'formatter/PropelFormatter.php',
+        'PropelFormatter' => 'formatter/PropelFormatter.php',
         'PropelObjectFormatter' => 'formatter/PropelObjectFormatter.php',
         'PropelOnDemandFormatter' => 'formatter/PropelOnDemandFormatter.php',
         'PropelStatementFormatter' => 'formatter/PropelStatementFormatter.php',
         'PropelSimpleArrayFormatter' => 'formatter/PropelSimpleArrayFormatter.php',
 
-        'BasicLogger'         => 'logger/BasicLogger.php',
-        'MojaviLogAdapter'    => 'logger/MojaviLogAdapter.php',
+        'BasicLogger' => 'logger/BasicLogger.php',
+        'MojaviLogAdapter' => 'logger/MojaviLogAdapter.php',
 
-        'ColumnMap'           => 'map/ColumnMap.php',
-        'DatabaseMap'         => 'map/DatabaseMap.php',
-        'TableMap'            => 'map/TableMap.php',
-        'RelationMap'         => 'map/RelationMap.php',
-        'ValidatorMap'        => 'map/ValidatorMap.php',
+        'ColumnMap' => 'map/ColumnMap.php',
+        'DatabaseMap' => 'map/DatabaseMap.php',
+        'TableMap' => 'map/TableMap.php',
+        'RelationMap' => 'map/RelationMap.php',
+        'ValidatorMap' => 'map/ValidatorMap.php',
 
-        'BaseObject'          => 'om/BaseObject.php',
-        'NodeObject'          => 'om/NodeObject.php',
-        'Persistent'          => 'om/Persistent.php',
+        'BaseObject' => 'om/BaseObject.php',
+        'NodeObject' => 'om/NodeObject.php',
+        'Persistent' => 'om/Persistent.php',
         'PreOrderNodeIterator' => 'om/PreOrderNodeIterator.php',
         'NestedSetPreOrderNodeIterator' => 'om/NestedSetPreOrderNodeIterator.php',
         'NestedSetRecursiveIterator' => 'om/NestedSetRecursiveIterator.php',
 
-        'PropelCSVParser'     => 'parser/PropelCSVParser.php',
-        'PropelJSONParser'    => 'parser/PropelJSONParser.php',
-        'PropelParser'        => 'parser/PropelParser.php',
-        'PropelXMLParser'     => 'parser/PropelXMLParser.php',
-        'PropelYAMLParser'    => 'parser/PropelYAMLParser.php',
+        'PropelCSVParser' => 'parser/PropelCSVParser.php',
+        'PropelJSONParser' => 'parser/PropelJSONParser.php',
+        'PropelParser' => 'parser/PropelParser.php',
+        'PropelXMLParser' => 'parser/PropelXMLParser.php',
+        'PropelYAMLParser' => 'parser/PropelYAMLParser.php',
 
-        'Criteria'            => 'query/Criteria.php',
-        'Criterion'           => 'query/Criterion.php',
-        'CriterionIterator'   => 'query/CriterionIterator.php',
-        'Join'                => 'query/Join.php',
-        'ModelCriteria'       => 'query/ModelCriteria.php',
-        'ModelCriterion'      => 'query/ModelCriterion.php',
-        'ModelJoin'           => 'query/ModelJoin.php',
-        'PropelQuery'         => 'query/PropelQuery.php',
+        'Criteria' => 'query/Criteria.php',
+        'Criterion' => 'query/Criterion.php',
+        'CriterionIterator' => 'query/CriterionIterator.php',
+        'Join' => 'query/Join.php',
+        'ModelCriteria' => 'query/ModelCriteria.php',
+        'ModelCriterion' => 'query/ModelCriterion.php',
+        'ModelJoin' => 'query/ModelJoin.php',
+        'PropelQuery' => 'query/PropelQuery.php',
 
-        'BasePeer'            => 'util/BasePeer.php',
-        'NodePeer'            => 'util/NodePeer.php',
-        'PeerInfo'            => 'util/PeerInfo.php',
-        'PropelAutoloader'    => 'util/PropelAutoloader.php',
-        'PropelColumnTypes'   => 'util/PropelColumnTypes.php',
+        'BasePeer' => 'util/BasePeer.php',
+        'NodePeer' => 'util/NodePeer.php',
+        'PeerInfo' => 'util/PeerInfo.php',
+        'PropelAutoloader' => 'util/PropelAutoloader.php',
+        'PropelColumnTypes' => 'util/PropelColumnTypes.php',
         'PropelConditionalProxy' => 'util/PropelConditionalProxy.php',
-        'PropelModelPager'    => 'util/PropelModelPager.php',
-        'PropelPager'         => 'util/PropelPager.php',
-        'PropelDateTime'      => 'util/PropelDateTime.php',
+        'PropelModelPager' => 'util/PropelModelPager.php',
+        'PropelPager' => 'util/PropelPager.php',
+        'PropelDateTime' => 'util/PropelDateTime.php',
 
-        'BasicValidator'      => 'validator/BasicValidator.php',
-        'MatchValidator'      => 'validator/MatchValidator.php',
-        'MaxLengthValidator'  => 'validator/MaxLengthValidator.php',
-        'MaxValueValidator'   => 'validator/MaxValueValidator.php',
-        'MinLengthValidator'  => 'validator/MinLengthValidator.php',
-        'MinValueValidator'   => 'validator/MinValueValidator.php',
-        'NotMatchValidator'   => 'validator/NotMatchValidator.php',
-        'RequiredValidator'   => 'validator/RequiredValidator.php',
-        'TypeValidator'       => 'validator/TypeValidator.php',
-        'UniqueValidator'     => 'validator/UniqueValidator.php',
+        'BasicValidator' => 'validator/BasicValidator.php',
+        'MatchValidator' => 'validator/MatchValidator.php',
+        'MaxLengthValidator' => 'validator/MaxLengthValidator.php',
+        'MaxValueValidator' => 'validator/MaxValueValidator.php',
+        'MinLengthValidator' => 'validator/MinLengthValidator.php',
+        'MinValueValidator' => 'validator/MinValueValidator.php',
+        'NotMatchValidator' => 'validator/NotMatchValidator.php',
+        'RequiredValidator' => 'validator/RequiredValidator.php',
+        'TypeValidator' => 'validator/TypeValidator.php',
+        'UniqueValidator' => 'validator/UniqueValidator.php',
         'ValidValuesValidator' => 'validator/ValidValuesValidator.php',
-        'ValidationFailed'    => 'validator/ValidationFailed.php',
+        'ValidationFailed' => 'validator/ValidationFailed.php',
     );
 
     /**
@@ -363,6 +370,51 @@ class Propel
             $c = new PropelConfiguration($c);
         }
         self::$configuration = $c;
+    }
+
+    /**
+     * Returns the debugger output.
+     *
+     * @return array
+     */
+    public static function getDebugOutput()
+    {
+        return self::$debugOutput;
+    }
+
+
+    /**
+     * Presents the output debugging information for front-end usage.
+     *
+     * @return string
+     */
+    public static function getDebugForFrontEnd()
+    {
+        return htmlspecialchars(json_encode(self::getDebugOutput()), ENT_QUOTES, "UTF-8");
+    }
+
+    /**
+     * Appends some additional debugging information.
+     *
+     * @param string $statement
+     * @param array $bindings
+     */
+    public static function addDebugOutput($statement = '', $bindings = [])
+    {
+        self::$debugOutput[] = [
+            'statement' => $statement,
+            'bindings' => $bindings
+        ];
+    }
+
+    /**
+     * Pushes in a new binding.
+     *
+     * @param string $binding
+     */
+    public static function addDebugBindingToLast($parameter = '', $value = '')
+    {
+        self::$debugOutput[count(self::$debugOutput) - 1]['bindings'][$parameter] = $value;
     }
 
     /**
@@ -488,8 +540,8 @@ class Propel
     /**
      * Sets the database map object to use for specified datasource.
      *
-     * @param string      $name The datasource name.
-     * @param DatabaseMap $map  The database map object to use for specified datasource.
+     * @param string $name The datasource name.
+     * @param DatabaseMap $map The database map object to use for specified datasource.
      */
     public static function setDatabaseMap($name, DatabaseMap $map)
     {
@@ -506,7 +558,7 @@ class Propel
      */
     public static function setForceMasterConnection($bit)
     {
-        self::$forceMasterConnection = (bool) $bit;
+        self::$forceMasterConnection = (bool)$bit;
     }
 
     /**
@@ -522,9 +574,9 @@ class Propel
     /**
      * Sets a Connection for specified datasource name.
      *
-     * @param string    $name The datasource name for the connection being set.
-     * @param PropelPDO $con  The PDO connection.
-     * @param string    $mode Whether this is a READ or WRITE connection (Propel::CONNECTION_READ, Propel::CONNECTION_WRITE)
+     * @param string $name The datasource name for the connection being set.
+     * @param PropelPDO $con The PDO connection.
+     * @param string $mode Whether this is a READ or WRITE connection (Propel::CONNECTION_READ, Propel::CONNECTION_WRITE)
      */
     public static function setConnection($name, PropelPDO $con, $mode = Propel::CONNECTION_WRITE)
     {
@@ -637,8 +689,8 @@ class Propel
     /**
      * Opens a new PDO connection for passed-in db name.
      *
-     * @param array  $conparams    Connection paramters.
-     * @param string $name         Datasource name.
+     * @param array $conparams Connection paramters.
+     * @param string $name Datasource name.
      * @param string $defaultClass The PDO subclass to instantiate if there is no explicit classname
      *                             specified in the connection params (default is Propel::CLASS_PROPEL_PDO)
      *
@@ -773,7 +825,7 @@ class Propel
     /**
      * Sets a database adapter for specified datasource.
      *
-     * @param string    $name    The datasource name.
+     * @param string $name The datasource name.
      * @param DBAdapter $adapter The DBAdapter implementation to use.
      */
     public static function setDB($name, DBAdapter $adapter)

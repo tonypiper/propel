@@ -188,6 +188,8 @@ class DBMySQL extends DBAdapter
      */
     public function bindValue(PDOStatement $stmt, $parameter, $value, ColumnMap $cMap, $position = null)
     {
+        Propel::addDebugBindingToLast($parameter, $value);
+
         $pdoType = $cMap->getPdoType();
         // FIXME - This is a temporary hack to get around apparent bugs w/ PDO+MYSQL
         // See http://pecl.php.net/bugs/bug.php?id=9919
