@@ -116,6 +116,13 @@ class Propel
     private static $startTime = 0;
 
     /**
+     * Indicates whether or not the debug log is enabled.
+     *
+     * @var bool
+     */
+    private static $debugLog = false;
+
+    /**
      * @var        string The db name that is specified as the default in the property file
      */
     private static $defaultDBName;
@@ -391,13 +398,37 @@ class Propel
 
 
     /**
+     * Indicates whether or not the debug log is enabled.
+     *
+     * @param bool $bFlag
+     */
+    public static function useDebugLog($bFlag = false)
+    {
+        self::$debugLog = $bFlag;
+    }
+
+
+    /**
+     * Returns whether or not debug logging is enabled.
+     *
+     * @return bool
+     */
+    public static function getDebugLog()
+    {
+        return self::$debugLog;
+    }
+
+
+    /**
      * Presents the output debugging information for front-end usage.
      *
      * @return string
      */
     public static function getDebugForFrontEnd()
     {
-        return htmlspecialchars(json_encode(self::getDebugOutput()), ENT_QUOTES, "UTF-8");
+        return htmlspecialchars(
+            json_encode(self::getDebugOutput()
+        ), ENT_QUOTES, "UTF-8");
     }
 
     /**
@@ -408,6 +439,10 @@ class Propel
      */
     public static function addDebugOutput($statement = '', $bindings = [])
     {
+        if (!self::getDebugLog()) {
+            return;
+        }
+
         self::startTime();
 
         self::$debugOutput[] = [
@@ -420,10 +455,15 @@ class Propel
     /**
      * Pushes in a new binding.
      *
-     * @param string $binding
+     * @param string $parameter
+     * @param string $value
      */
     public static function addDebugBindingToLast($parameter = '', $value = '')
     {
+        if (!self::getDebugLog()) {
+            return;
+        }
+
         self::$debugOutput[count(self::$debugOutput) - 1]['bindings'][$parameter] = $value;
     }
 
@@ -434,7 +474,7 @@ class Propel
     {
         self::$startTime = microtime(true);
 
-        if(!self::$debugOutput){
+        if (!self::$debugOutput) {
             return;
         }
 
