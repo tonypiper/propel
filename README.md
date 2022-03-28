@@ -12,7 +12,7 @@ to master, and run `composer install`.
 ```json
 {
   "require": {
-    "propel/propel1": "dev-master"
+    "propel/propel1": "^1.7"
   },
   "repositories": [
     {
