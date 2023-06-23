@@ -225,7 +225,7 @@ class Criterion
      *
      * @return array
      */
-    private function getClauses()
+    protected function getClauses()
     {
         return $this->clauses;
     }
